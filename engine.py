@@ -58,7 +58,7 @@ class Laser(pygame.sprite.Sprite):
 
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-        self.image = pygame.image.load('assets' + 'singleLaser.png')
+        self.image = pygame.image.load('assets/' + 'singleLaser.png')
 
         # Fetch the rectangle object that has the dimensions of the image
         # image.
