@@ -107,6 +107,11 @@ clock = pygame.time.Clock()
 
 score = 0
 
+reloading = False
+
+TIME_TO_RELOAD = 1
+
+
 # -------- Main Program Loop -----------
 while not done:
     for event in pygame.event.get():
@@ -119,12 +124,19 @@ while not done:
     # Get the current mouse position. This returns the position
     # as a list of two numbers.
     pos = pygame.mouse.get_pos()
-
-    if (pygame.mouse.get_pressed()[0]):
+    
+    if (pygame.mouse.get_pressed()[0] and not reloading):
         laser = Laser()
         laser.rect.center = player.rect.center
+        laser.rect.y = laser.rect.y - 20
+        laser.rect.x = laser.rect.x - 11
         laser_sprites.add(laser)
         all_sprites_list.add(laser)
+        lastReloadTime = time.perf_counter()
+        reloading = True
+
+    if reloading and time.perf_counter() - lastReloadTime > TIME_TO_RELOAD:
+        reloading = False
 
     # Fetch the x and y out of the list,
     # just like we'd fetch letters out of a string.
