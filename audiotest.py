@@ -35,7 +35,7 @@ playhead = 0
 pygame.midi.init()
 while not pygame.midi.get_init():
     pass #Wait for midi library to initialize
-midi_out = pygame.midi.Output(0)
+midi_out = pygame.midi.Output()
 
 # -------- Main Program Loop -----------
 while not done:
