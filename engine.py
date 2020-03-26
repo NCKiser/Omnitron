@@ -2,6 +2,8 @@ import pygame
 import time
 import random
 
+from enemy import Enemy
+
 screen_width = 640
 screen_height = 480
 
@@ -9,10 +11,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-enemyList = ['enemyA', 'enemyB', 'enemyC', 'enemyD']
 
-
-class Block(pygame.sprite.Sprite):
+class Ship(pygame.sprite.Sprite):
     """
     This class represents the ball.
     It derives from the "Sprite" class in Pygame.
@@ -36,11 +36,8 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self):
-        self.rect.y = self.rect.y + 1
-        if (self.rect.center[1] > screen_height):
-            self.rect.center = (self.rect.center[0], self.rect.center[1] - screen_height)
-        if (self.rect.center[1] < 0):
-            self.rect.center = (self.rect.center[0], self.rect.center[1] + screen_height)
+        w, h = pygame.display.get_surface().get_size()
+        self.rect.center = w/2, h-h/10
 
 
 class Laser(pygame.sprite.Sprite):
@@ -77,26 +74,19 @@ pygame.init()
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SCALED, 32)
 
-block_list = pygame.sprite.Group()
+enemy_list = pygame.sprite.Group()
 all_sprites_list = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
 
 for i in range(50):
     # This represents a block
-    block = Block(enemyList[random.randint(0, len(enemyList) - 1)] + '.png')
-
-    # Set a random location for the block
-
-    block.image = pygame.transform.rotate(block.image, 180)
-    block.rect = block.image.get_rect()
-
-    block.rect.center = (random.randrange(screen_width), random.randrange(screen_height))
+    enemy = Enemy(press_time=0, player_key=1)
 
     # Add the block to the list of objects
-    block_list.add(block)
-    all_sprites_list.add(block)
+    enemy_list.add(enemy)
+    all_sprites_list.add(enemy)
 
-player = Block('mainShip.png')
+player = Ship('mainShip.png')
 all_sprites_list.add(player)
 
 # Loop until the user clicks the close button.
@@ -108,9 +98,9 @@ clock = pygame.time.Clock()
 score = 0
 
 reloading = False
-
+KEYS = 8
+TOLERANCE = 10
 TIME_TO_RELOAD = 1
-
 
 # -------- Main Program Loop -----------
 while not done:
@@ -120,32 +110,20 @@ while not done:
 
     # Clear the screen
     screen.fill(WHITE)
-
-    # Get the current mouse position. This returns the position
-    # as a list of two numbers.
-    pos = pygame.mouse.get_pos()
-    
-    if (pygame.mouse.get_pressed()[0] and not reloading):
-        laser = Laser()
-        laser.rect.center = player.rect.center
-        laser.rect.y = laser.rect.y - 20
-        laser.rect.x = laser.rect.x - 11
-        laser_sprites.add(laser)
-        all_sprites_list.add(laser)
-        lastReloadTime = time.perf_counter()
-        reloading = True
-
-    if reloading and time.perf_counter() - lastReloadTime > TIME_TO_RELOAD:
-        reloading = False
-
-    # Fetch the x and y out of the list,
-    # just like we'd fetch letters out of a string.
-    # Set the player object to the mouse location
-    player.rect.center = pos
-
-    block_list.update()
+    # Draw targetting array
+    w, h = pygame.display.get_surface().get_size()
+    line_end_loc = h - (2 * h / 10)
+    pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
+    for i in range(0, KEYS):
+        pygame.draw.circle(screen, RED, (w/KEYS*(i+.5), line_end_loc), radius=h/screen_height*TOLERANCE)
+        pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE-1)
+    for enemy in enemy_list:
+        enemy.appear()
+    enemy_list.update()
     laser_sprites.update()
+    all_sprites_list.update()
     all_sprites_list.draw(screen)
+
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
