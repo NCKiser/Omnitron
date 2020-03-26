@@ -14,7 +14,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
 pygame.init()
-print(pygame.mixer.init())
+# print(pygame.mixer.init())
 
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SCALED, 32)
@@ -34,7 +34,6 @@ score = 0
 state = 0
 level_loading = 0
 
-audio_track = None
 playhead = 0
 
 # -------- Main Program Loop -----------
@@ -61,23 +60,10 @@ while not done:
             pass
             if playhead < len(audio_track):
                 print(audio_track[playhead])
-                # fakefile = io.BytesIO(bytes(audio_track[playhead].bytes()))
-                fakefile = io.BytesIO()
-                # fakemusic = mido.MidiFile(file=fakefile)
-                fakemusic = mido.MidiFile()
-                track = mido.MidiTrack()
-                fakemusic.tracks.append(track)
 
-                track.append(mido.Message('program_change', program=12, time=0))
-                track.append(audio_track[playhead])
-
-                fakemusic.save(file=fakefile)
-                fakefile.seek(0)
-                pygame.mixer.music.load(fakefile)
-                pygame.mixer.music.play()
                 playhead += 1
             else:
-                print("Audio track ended)")
+                print("Audio track ended")
 
 
 
