@@ -37,7 +37,7 @@ class Ship(pygame.sprite.Sprite):
 
     def update(self):
         w, h = pygame.display.get_surface().get_size()
-        self.rect.center = w/2, h-h/10
+        self.rect.center = w / 2, h - h / 10
 
 
 class Laser(pygame.sprite.Sprite):
@@ -102,12 +102,17 @@ KEYS = 8
 TOLERANCE = 10
 TIME_TO_RELOAD = 1
 
+KEYMAP = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
+
 # -------- Main Program Loop -----------
 while not done:
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            print(event.key)
+        if event.type == pygame.KEYUP:
+            print(event.key)
         if event.type == pygame.QUIT:
             done = True
-
     # Clear the screen
     screen.fill(WHITE)
     # Draw targetting array
@@ -115,8 +120,8 @@ while not done:
     line_end_loc = h - (2 * h / 10)
     pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
     for i in range(0, KEYS):
-        pygame.draw.circle(screen, RED, (w/KEYS*(i+.5), line_end_loc), radius=h/screen_height*TOLERANCE)
-        pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE-1)
+        pygame.draw.circle(screen, RED, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE)
+        pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE - 1)
     for enemy in enemy_list:
         enemy.appear()
     enemy_list.update()
@@ -124,8 +129,7 @@ while not done:
     all_sprites_list.update()
     all_sprites_list.draw(screen)
 
-
-    # Go ahead and update the screen with what we've drawn.
+    # Go ahead and update the screen with what wfdafdae've drawn.
     pygame.display.flip()
 
     # Limit to 60 frames per second
