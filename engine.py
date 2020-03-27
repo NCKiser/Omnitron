@@ -11,6 +11,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
+pressed = ' '
+
 
 class Ship(pygame.sprite.Sprite):
     """
@@ -38,7 +40,24 @@ class Ship(pygame.sprite.Sprite):
     def update(self):
         w, h = pygame.display.get_surface().get_size()
         self.rect.center = w / 2, h - h / 10
-
+        if pressed == ' ':
+            self.rect.center = w / 2, h - h / 10
+        if pressed == 'APressed':
+            self.rect.center = w / 16, h - h / 10
+        if pressed == 'SPressed':
+            self.rect.center = w / 5.3, h - h / 10
+        if pressed == 'DPressed':
+            self.rect.center = w / 3.2, h - h / 10
+        if pressed == 'FPressed':
+            self.rect.center = w / 2.275, h - h / 10
+        if pressed == 'JPressed':
+            self.rect.center = w / 1.77, h - h / 10
+        if pressed == 'KPressed':
+            self.rect.center = w / 1.45, h - h / 10
+        if pressed == 'LPressed':
+            self.rect.center = w / 1.225, h - h / 10
+        if pressed == 'SCPressed':
+            self.rect.center = w / 1.065, h - h / 10
 
 class Laser(pygame.sprite.Sprite):
     """
@@ -109,10 +128,33 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             print(event.key)
+            if event.key == pygame.K_a:
+                pressed = 'APressed'
+            if event.key == pygame.K_s:
+                pressed = 'SPressed'
+            if event.key == pygame.K_d:
+                pressed = 'DPressed'
+            if event.key == pygame.K_f:
+                pressed = 'FPressed'
+            if event.key == pygame.K_j:
+                pressed = 'JPressed'
+            if event.key == pygame.K_k:
+                pressed = 'KPressed'
+            if event.key == pygame.K_l:
+                pressed = 'LPressed'
+            if event.key == pygame.K_SEMICOLON:
+                pressed = 'SCPressed'
         if event.type == pygame.KEYUP:
             print(event.key)
+            laser = Laser()
+            laser.rect.center = player.rect.center
+            laser.rect.y = laser.rect.y - 20
+            laser.rect.x = laser.rect.x - 11
+            laser_sprites.add(laser)
+            all_sprites_list.add(laser)
         if event.type == pygame.QUIT:
             done = True
+            
     # Clear the screen
     screen.fill(WHITE)
     # Draw targetting array
