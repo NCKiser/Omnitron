@@ -120,6 +120,14 @@ reloading = False
 KEYS = 8
 TOLERANCE = 10
 TIME_TO_RELOAD = 1
+firing_a = False
+firing_s = False
+firing_d = False
+firing_f = False
+firing_j = False
+firing_k = False
+firing_l = False
+firing_SC = False
 
 KEYMAP = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
 
@@ -130,30 +138,56 @@ while not done:
             print(event.key)
             if event.key == pygame.K_a:
                 pressed = 'APressed'
+                firing_a = True
             if event.key == pygame.K_s:
                 pressed = 'SPressed'
+                firing_s = True
             if event.key == pygame.K_d:
                 pressed = 'DPressed'
+                firing_d = True
             if event.key == pygame.K_f:
                 pressed = 'FPressed'
+                firing_f = True
             if event.key == pygame.K_j:
                 pressed = 'JPressed'
+                firing_j = True
             if event.key == pygame.K_k:
                 pressed = 'KPressed'
+                firing_k = True
             if event.key == pygame.K_l:
                 pressed = 'LPressed'
+                firing_l = True
             if event.key == pygame.K_SEMICOLON:
                 pressed = 'SCPressed'
+                firing_SC = True
         if event.type == pygame.KEYUP:
             print(event.key)
-            laser = Laser()
-            laser.rect.center = player.rect.center
-            laser.rect.y = laser.rect.y - 20
-            laser.rect.x = laser.rect.x - 11
-            laser_sprites.add(laser)
-            all_sprites_list.add(laser)
+            if event.key == pygame.K_a:
+                firing_a = False
+            if event.key == pygame.K_s:
+                firing_s = False
+            if event.key == pygame.K_d:
+                firing_d = False
+            if event.key == pygame.K_f:
+                firing_f = False
+            if event.key == pygame.K_j:
+                firing_j = False
+            if event.key == pygame.K_k:
+                firing_k = False
+            if event.key == pygame.K_l:
+                firing_l = False
+            if event.key == pygame.K_SEMICOLON:
+                firing_SC = False
         if event.type == pygame.QUIT:
             done = True
+
+    if firing_a or firing_s or firing_d or firing_f or firing_j or firing_k or firing_l or firing_SC:
+        laser = Laser()
+        laser.rect.center = player.rect.center
+        laser.rect.y = laser.rect.y - 20
+        laser.rect.x = laser.rect.x - 11
+        laser_sprites.add(laser)
+        all_sprites_list.add(laser)
             
     # Clear the screen
     screen.fill(WHITE)
