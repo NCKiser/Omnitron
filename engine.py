@@ -1,11 +1,12 @@
 import pygame
 import time
 import random
+import settings
 
 from enemy import Enemy
 
-screen_width = 640
-screen_height = 480
+settings.SCREEN_WIDTH = 640
+settings.SCREEN_HEIGHT = 480
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -59,6 +60,7 @@ class Ship(pygame.sprite.Sprite):
         if pressed == 'SCPressed':
             self.rect.center = w / 1.065, h - h / 10
 
+
 class Laser(pygame.sprite.Sprite):
     """
     This class represents the ball.
@@ -81,7 +83,7 @@ class Laser(pygame.sprite.Sprite):
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-        self.rect.center = (screen_width / 2, screen_height / 2)
+        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
 
     def update(self):
         self.rect.y = self.rect.y - 2
@@ -91,19 +93,11 @@ class Laser(pygame.sprite.Sprite):
 
 pygame.init()
 
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.SCALED, 32)
+screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.SCALED, 32)
 
 enemy_list = pygame.sprite.Group()
 all_sprites_list = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
-
-for i in range(50):
-    # This represents a block
-    enemy = Enemy(press_time=0, player_key=1)
-
-    # Add the block to the list of objects
-    enemy_list.add(enemy)
-    all_sprites_list.add(enemy)
 
 player = Ship('mainShip.png')
 all_sprites_list.add(player)
@@ -121,57 +115,85 @@ KEYS = 8
 TOLERANCE = 10
 TIME_TO_RELOAD = 1
 
-KEYMAP = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
-
+enemy_tracks = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
+for key in enemy_tracks:
+    enemy_tracks[key] = pygame.sprite.Group()
+level_state = 0
+menu = 0
+level_start = 0
 # -------- Main Program Loop -----------
 while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            print(event.key)
-            if event.key == pygame.K_a:
-                pressed = 'APressed'
-            if event.key == pygame.K_s:
-                pressed = 'SPressed'
-            if event.key == pygame.K_d:
-                pressed = 'DPressed'
-            if event.key == pygame.K_f:
-                pressed = 'FPressed'
-            if event.key == pygame.K_j:
-                pressed = 'JPressed'
-            if event.key == pygame.K_k:
-                pressed = 'KPressed'
-            if event.key == pygame.K_l:
-                pressed = 'LPressed'
-            if event.key == pygame.K_SEMICOLON:
-                pressed = 'SCPressed'
-        if event.type == pygame.KEYUP:
-            print(event.key)
-            laser = Laser()
-            laser.rect.center = player.rect.center
-            laser.rect.y = laser.rect.y - 20
-            laser.rect.x = laser.rect.x - 11
-            laser_sprites.add(laser)
-            all_sprites_list.add(laser)
-        if event.type == pygame.QUIT:
-            done = True
-            
-    # Clear the screen
-    screen.fill(WHITE)
-    # Draw targetting array
-    w, h = pygame.display.get_surface().get_size()
-    line_end_loc = h - (2 * h / 10)
-    pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
-    for i in range(0, KEYS):
-        pygame.draw.circle(screen, RED, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE)
-        pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc), radius=h / screen_height * TOLERANCE - 1)
-    for enemy in enemy_list:
-        enemy.appear()
-    enemy_list.update()
-    laser_sprites.update()
-    all_sprites_list.update()
-    all_sprites_list.draw(screen)
+    if menu:
+        pass
+    else:
+        if level_state == 0:
+            print("Loading Level")
+            for i in range(50):
+                # This represents a block
+                enemy = Enemy(press_time=i * settings.TEMPO, player_key=(i % 8))
 
-    # Go ahead and update the screen with what wfdafdae've drawn.
+                # Add the block to the list of objects
+                list(enemy_tracks.values())[i % 8].add(enemy)
+                enemy_list.add(enemy)
+                all_sprites_list.add(enemy)
+            level_start = pygame.time.get_ticks()
+            level_state = 1
+        elif level_state == 1:
+            current_time = pygame.time.get_ticks()-level_start
+            print(enemy_list)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    print(event.key)
+                    for enemy in enemy_tracks[event.key]:
+                        enemy.shot_attempt(current_time)
+                    if event.key == pygame.K_a:
+                        pressed = 'APressed'
+                    if event.key == pygame.K_s:
+                        pressed = 'SPressed'
+                    if event.key == pygame.K_d:
+                        pressed = 'DPressed'
+                    if event.key == pygame.K_f:
+                        pressed = 'FPressed'
+                    if event.key == pygame.K_j:
+                        pressed = 'JPressed'
+                    if event.key == pygame.K_k:
+                        pressed = 'KPressed'
+                    if event.key == pygame.K_l:
+                        pressed = 'LPressed'
+                    if event.key == pygame.K_SEMICOLON:
+                        pressed = 'SCPressed'
+                if event.type == pygame.KEYUP:
+                    print(event.key)
+                    laser = Laser()
+                    laser.rect.center = player.rect.center
+                    laser.rect.y = laser.rect.y - 20
+                    laser.rect.x = laser.rect.x - 11
+                    laser_sprites.add(laser)
+                    all_sprites_list.add(laser)
+                if event.type == pygame.QUIT:
+                    done = True
+
+            # Clear the screen
+            screen.fill(WHITE)
+            # Draw targetting array
+            w, h = pygame.display.get_surface().get_size()
+            line_end_loc = h - (2 * h / 10)
+            pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
+            for i in range(0, KEYS):
+                pygame.draw.circle(screen, RED, (w / KEYS * (i + .5), line_end_loc),
+                                   radius=h / settings.SCREEN_HEIGHT * TOLERANCE)
+                pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc),
+                                   radius=h / settings.SCREEN_HEIGHT * TOLERANCE - 1)
+            for enemy in enemy_list:
+                if enemy.appear_time <= current_time:
+                    enemy.appear()
+            enemy_list.update()
+            laser_sprites.update()
+            all_sprites_list.update()
+            all_sprites_list.draw(screen)
+            print(pygame.time.get_ticks())
+
+    # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
     # Limit to 60 frames per second
