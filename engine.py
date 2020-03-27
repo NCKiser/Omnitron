@@ -151,10 +151,8 @@ while not done:
             level_state = 1
         elif level_state == 1:
             current_time = pygame.time.get_ticks() - level_start
-            print(enemy_list)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    print(event.key)
                     for enemy in enemy_tracks[event.key]:
                         enemy.shot_attempt(current_time)
                         if event.key == pygame.K_a:
@@ -228,7 +226,6 @@ while not done:
             laser_sprites.update()
             player.update()
             all_sprites_list.draw(screen)
-            print(pygame.time.get_ticks())
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()

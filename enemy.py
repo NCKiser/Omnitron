@@ -3,12 +3,11 @@ import settings
 
 pygame.mixer.init()
 
+
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 100
+    TOLERANCE = 50
     DEFAULT_SPEED = 2
     POINTS = 100
-
-
 
     def __init__(self, appear_time, player_key, duration=1, sprite_option='A'):
         self.appear_time = appear_time
@@ -34,8 +33,7 @@ class Enemy(pygame.sprite.Sprite):
     def update(self, d_time):
         if self.present:
             w, h = pygame.display.get_surface().get_size()
-            distance = h * d_time/settings.VISIBLE_TIME
-            print(distance)
+            distance = h * d_time / settings.VISIBLE_TIME
             # speed = h / 600 * self.DEFAULT_SPEED
             self.rect = self.rect.move(0, distance)
             x, y = self.rect.center
@@ -43,18 +41,19 @@ class Enemy(pygame.sprite.Sprite):
 
             if y >= line_end_loc and not self.played:
                 self.play()
+                self.played = True
             if y > h:
                 self.kill()
 
     def play(self):
-
         print("PLAYING NOTE")
         self.note.play()
 
     def shot_attempt(self, shot_time):
         pts = -100  # lose points for missing
-        if self.present and self.appear_time - self.TOLERANCE <= shot_time <= self.end_time + self.TOLERANCE:
-            pts = 100 * (1 - abs(self.appear_time - shot_time) / self.TOLERANCE)
+        if self.present and self.play_time - self.TOLERANCE <= shot_time <= self.end_time + self.TOLERANCE:
+            pts = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
+            print(pts)
             self.appear_time = shot_time
             self.kill()
         return pts
