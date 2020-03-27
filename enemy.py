@@ -4,9 +4,10 @@ import settings
 import globals
 
 pygame.mixer.init()
+pygame.mixer.set_num_channels(128)
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 150
+    TOLERANCE = 125
     DEFAULT_SPEED = 2
     POINTS = 100
 
@@ -27,6 +28,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.center = (channel_size * self.player_key - channel_size / 2, -self.image.get_rect()[0])
         self.played = False
         self.note = pygame.mixer.Sound("assets/g.wav")
+        self.dead = False
 
     def appear(self):
         self.present = True
@@ -40,12 +42,12 @@ class Enemy(pygame.sprite.Sprite):
             self.rect = self.rect.move(0, distance)
             x, y = self.rect.center
 
-
             if y >= line_end_loc and not self.played:
                 self.play()
                 self.played = True
             if y > h:
-                globals.score -= 50
+                if not self.dead:
+                    globals.score -= 50
                 self.kill()
 
     def play(self):
@@ -61,4 +63,5 @@ class Enemy(pygame.sprite.Sprite):
             #print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
             #self.kill()
             self.image = pygame.image.load("assets/clear.png")
+            self.dead = True
         return pts

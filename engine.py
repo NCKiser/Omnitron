@@ -242,7 +242,7 @@ while not done:
             player.update()
             laser_sprites.update()
             all_sprites_list.draw(screen)
-            draw_text(screen, str(globals.score), 18, settings.SCREEN_WIDTH / 2, 10)
+            draw_text(screen, str(round(globals.score)), 18, settings.SCREEN_WIDTH / 2, 10)
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
