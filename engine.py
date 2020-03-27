@@ -139,9 +139,9 @@ while not done:
     else:
         if level_state == 0:
             print("Loading Level")
-            for i in range(50):
+            for i in range(56):
                 # This represents an enemy ship
-                enemy = Enemy(i * settings.TEMPO, player_key=(i % 8))
+                enemy = Enemy(i * settings.TEMPO, player_key=(i % 8 + 1))
 
                 # Add the block to the list of objects
                 list(enemy_tracks.values())[i % 8].add(enemy)
@@ -153,32 +153,36 @@ while not done:
             current_time = pygame.time.get_ticks() - level_start
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    for enemy in enemy_tracks[event.key]:
-                        enemy.shot_attempt(current_time)
-                        if event.key == pygame.K_a:
-                            pressed = 'APressed'
-                            firing_a = True
-                        if event.key == pygame.K_s:
-                            pressed = 'SPressed'
-                            firing_s = True
-                        if event.key == pygame.K_d:
-                            pressed = 'DPressed'
-                            firing_d = True
-                        if event.key == pygame.K_f:
-                            pressed = 'FPressed'
-                            firing_f = True
-                        if event.key == pygame.K_j:
-                            pressed = 'JPressed'
-                            firing_j = True
-                        if event.key == pygame.K_k:
-                            pressed = 'KPressed'
-                            firing_k = True
-                        if event.key == pygame.K_l:
-                            pressed = 'LPressed'
-                            firing_l = True
-                        if event.key == pygame.K_SEMICOLON:
-                            pressed = 'SCPressed'
-                            firing_SC = True
+                    try:
+                        for enemy in enemy_tracks[event.key]:
+                            enemy.shot_attempt(current_time)
+                            print(current_time)
+                            if event.key == pygame.K_a:
+                                pressed = 'APressed'
+                                firing_a = True
+                            if event.key == pygame.K_s:
+                                pressed = 'SPressed'
+                                firing_s = True
+                            if event.key == pygame.K_d:
+                                pressed = 'DPressed'
+                                firing_d = True
+                            if event.key == pygame.K_f:
+                                pressed = 'FPressed'
+                                firing_f = True
+                            if event.key == pygame.K_j:
+                                pressed = 'JPressed'
+                                firing_j = True
+                            if event.key == pygame.K_k:
+                                pressed = 'KPressed'
+                                firing_k = True
+                            if event.key == pygame.K_l:
+                                pressed = 'LPressed'
+                                firing_l = True
+                            if event.key == pygame.K_SEMICOLON:
+                                pressed = 'SCPressed'
+                                firing_SC = True
+                    except KeyError:
+                        print("invalid key")s
                 if event.type == pygame.KEYUP:
                     print(event.key)
                     if event.key == pygame.K_a:
@@ -223,8 +227,8 @@ while not done:
                 if enemy.appear_time <= current_time:
                     enemy.appear()
             enemy_list.update(d_time)
-            laser_sprites.update()
             player.update()
+            laser_sprites.update()
             all_sprites_list.draw(screen)
 
     # Go ahead and update the screen with what we've drawn.
