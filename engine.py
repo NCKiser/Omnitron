@@ -178,34 +178,34 @@ while not done:
                         if event.key == pygame.K_SEMICOLON:
                             pressed = 'SCPressed'
                             firing_SC = True
-                    if event.type == pygame.KEYUP:
-                        print(event.key)
-                        if event.key == pygame.K_a:
-                            firing_a = False
-                        if event.key == pygame.K_s:
-                            firing_s = False
-                        if event.key == pygame.K_d:
-                            firing_d = False
-                        if event.key == pygame.K_f:
-                            firing_f = False
-                        if event.key == pygame.K_j:
-                            firing_j = False
-                        if event.key == pygame.K_k:
-                            firing_k = False
-                        if event.key == pygame.K_l:
-                            firing_l = False
-                        if event.key == pygame.K_SEMICOLON:
-                            firing_SC = False
-                    if event.type == pygame.QUIT:
-                        done = True
+                if event.type == pygame.KEYUP:
+                    print(event.key)
+                    if event.key == pygame.K_a:
+                        firing_a = False
+                    if event.key == pygame.K_s:
+                        firing_s = False
+                    if event.key == pygame.K_d:
+                        firing_d = False
+                    if event.key == pygame.K_f:
+                        firing_f = False
+                    if event.key == pygame.K_j:
+                        firing_j = False
+                    if event.key == pygame.K_k:
+                        firing_k = False
+                    if event.key == pygame.K_l:
+                        firing_l = False
+                    if event.key == pygame.K_SEMICOLON:
+                        firing_SC = False
+                if event.type == pygame.QUIT:
+                    done = True
 
-                if firing_a or firing_s or firing_d or firing_f or firing_j or firing_k or firing_l or firing_SC:
-                    laser = Laser()
-                    laser.rect.center = player.rect.center
-                    laser.rect.y = laser.rect.y - 20
-                    laser.rect.x = laser.rect.x - 11
-                    laser_sprites.add(laser)
-                    all_sprites_list.add(laser)
+            if firing_a or firing_s or firing_d or firing_f or firing_j or firing_k or firing_l or firing_SC:
+                laser = Laser()
+                laser.rect.center = player.rect.center
+                laser.rect.y = laser.rect.y - 20
+                laser.rect.x = laser.rect.x - 11
+                laser_sprites.add(laser)
+                all_sprites_list.add(laser)
 
             # Clear the screen
             screen.fill(WHITE)
