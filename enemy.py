@@ -7,9 +7,10 @@ class Enemy(pygame.sprite.Sprite):
     DEFAULT_SPEED = 2
     POINTS = 100
 
-    def __init__(self, press_time, player_key, duration=1, sprite_option='A'):
-        self.appear_time = press_time
-        self.end_time = press_time + duration * settings.TEMPO
+    def __init__(self, appear_time, player_key, duration=1, sprite_option='A'):
+        self.appear_time = appear_time
+        self.play_time = self.appear_time + settings.VISIBLE_TIME
+        self.end_time = self.play_time + duration * settings.TEMPO
         self.duration = duration
         self.player_key = player_key  # 1-8
         self.sprite_option = sprite_option.upper()  # a-d
@@ -21,19 +22,29 @@ class Enemy(pygame.sprite.Sprite):
         channel_size = w / 8
         self.rect = self.image.get_rect()
         self.rect.center = (channel_size * self.player_key - channel_size / 2, -self.image.get_rect()[0])
+        self.played = False
 
     def appear(self):
         self.present = True
 
-    def update(self):
+    def update(self, d_time):
         if self.present:
             w, h = pygame.display.get_surface().get_size()
-            speed = h / settings.SCREEN_HEIGHT * settings.VISIBLE_TIME / 1000
+            distance = h * d_time/settings.VISIBLE_TIME
+            print(distance)
             # speed = h / 600 * self.DEFAULT_SPEED
-            self.rect = self.rect.move(0, speed)
+            self.rect = self.rect.move(0, distance)
             x, y = self.rect.center
+            line_end_loc = h - (2 * h / 10)
+
+            if y >= line_end_loc and not self.played:
+                self.play()
             if y > h:
                 self.kill()
+
+    def play(self):
+
+        print("PLAYING NOTE")
 
     def shot_attempt(self, shot_time):
         pts = -100  # lose points for missing

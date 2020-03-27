@@ -131,14 +131,16 @@ menu = 0
 level_start = 0
 # -------- Main Program Loop -----------
 while not done:
+    d_time = clock.tick(60)
+
     if menu:
         pass
     else:
         if level_state == 0:
             print("Loading Level")
             for i in range(50):
-                # This represents a block
-                enemy = Enemy(press_time=i * settings.TEMPO, player_key=(i % 8))
+                # This represents an enemy ship
+                enemy = Enemy(i * settings.TEMPO, player_key=(i % 8))
 
                 # Add the block to the list of objects
                 list(enemy_tracks.values())[i % 8].add(enemy)
@@ -221,9 +223,9 @@ while not done:
             for enemy in enemy_list:
                 if enemy.appear_time <= current_time:
                     enemy.appear()
-            enemy_list.update()
+            enemy_list.update(d_time)
             laser_sprites.update()
-            all_sprites_list.update()
+            player.update()
             all_sprites_list.draw(screen)
             print(pygame.time.get_ticks())
 
@@ -231,7 +233,6 @@ while not done:
     pygame.display.flip()
 
     # Limit to 60 frames per second
-    clock.tick(60)
 
 pygame.quit()
 
