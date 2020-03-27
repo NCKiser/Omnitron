@@ -1,11 +1,14 @@
 import pygame
 import settings
 
+pygame.mixer.init()
 
 class Enemy(pygame.sprite.Sprite):
     TOLERANCE = 100
     DEFAULT_SPEED = 2
     POINTS = 100
+
+
 
     def __init__(self, appear_time, player_key, duration=1, sprite_option='A'):
         self.appear_time = appear_time
@@ -23,6 +26,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (channel_size * self.player_key - channel_size / 2, -self.image.get_rect()[0])
         self.played = False
+        self.note = pygame.mixer.Sound("assets/g.wav")
 
     def appear(self):
         self.present = True
@@ -45,6 +49,7 @@ class Enemy(pygame.sprite.Sprite):
     def play(self):
 
         print("PLAYING NOTE")
+        self.note.play()
 
     def shot_attempt(self, shot_time):
         pts = -100  # lose points for missing

@@ -16,9 +16,7 @@ Cassie Paulin
 
 
 Music:
-http://www.partnersinrhyme.com/midi/Danccontrol_change channel=0 control=64 value=0 time=0
-e_Techno/Dance_Techno_Midi_Files/abridge_d.shtml
-
+https://freesound.org/people/SpeedY/sounds/8403/
 
 
 

@@ -92,6 +92,7 @@ class Laser(pygame.sprite.Sprite):
 
 
 pygame.init()
+pygame.mixer.init()
 
 screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.SCALED, 32)
 
