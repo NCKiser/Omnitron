@@ -1,8 +1,9 @@
 import pygame
 import settings
 
-pygame.mixer.init()
+import globals
 
+pygame.mixer.init()
 
 class Enemy(pygame.sprite.Sprite):
     TOLERANCE = 150
@@ -44,6 +45,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.play()
                 self.played = True
             if y > h:
+                globals.score -= 50
                 self.kill()
 
     def play(self):
@@ -51,12 +53,12 @@ class Enemy(pygame.sprite.Sprite):
         self.note.play()
 
     def shot_attempt(self, shot_time):
-        pts = -100  # lose points for missing
+        pts = 0  # lose points for missing
         if self.present and (self.play_time - self.TOLERANCE <= shot_time) and (shot_time <= self.end_time + self.TOLERANCE):
-            pts = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
+            globals.score += 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
             #print(pts)
             self.appear_time = shot_time
             #print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
             #self.kill()
-            self.image = pygame.image.load("assets/poof.png")
+            self.image = pygame.image.load("assets/clear.png")
         return pts

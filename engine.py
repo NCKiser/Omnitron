@@ -4,6 +4,9 @@ import random
 import settings
 
 from enemy import Enemy
+import globals
+
+globals.init()
 
 settings.SCREEN_WIDTH = 640
 settings.SCREEN_HEIGHT = 480
@@ -117,7 +120,7 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-score = 0
+globals.score = 0
 
 reloading = False
 KEYS = 8
@@ -190,7 +193,7 @@ while not done:
                                 pressed = 'SCPressed'
                                 firing_SC = True
                     except KeyError:
-                        print("invalid key")s
+                        print("invalid key")
                 if event.type == pygame.KEYUP:
                     print(event.key)
                     if event.key == pygame.K_a:
@@ -219,7 +222,7 @@ while not done:
                 laser.rect.x = laser.rect.x - 11
                 laser_sprites.add(laser)
                 all_sprites_list.add(laser)
-                score += 63
+                #score += 63
 
             # Clear the screen
             screen.fill(WHITE)
@@ -239,7 +242,7 @@ while not done:
             player.update()
             laser_sprites.update()
             all_sprites_list.draw(screen)
-            draw_text(screen, str(score), 18, settings.SCREEN_WIDTH / 2, 10)
+            draw_text(screen, str(globals.score), 18, settings.SCREEN_WIDTH / 2, 10)
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
