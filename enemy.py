@@ -32,14 +32,13 @@ class Enemy(pygame.sprite.Sprite):
             # speed = h / 600 * self.DEFAULT_SPEED
             self.rect = self.rect.move(0, speed)
             x, y = self.rect.center
-            if y > h - (2 * h / 10):
+            if y > h:
                 self.kill()
 
     def shot_attempt(self, shot_time):
         pts = -100  # lose points for missing
-        if self.appear_time - self.TOLERANCE <= shot_time <= self.end_time + self.TOLERANCE:
+        if self.present and self.appear_time - self.TOLERANCE <= shot_time <= self.end_time + self.TOLERANCE:
             pts = 100 * (1 - abs(self.appear_time - shot_time) / self.TOLERANCE)
             self.appear_time = shot_time
-
-        self.kill()
+            self.kill()
         return pts
