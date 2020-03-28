@@ -7,14 +7,14 @@ pygame.mixer.init()
 pygame.mixer.set_num_channels(128)
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 125
+    TOLERANCE = 200
     DEFAULT_SPEED = 2
     POINTS = 100
 
-    def __init__(self, appear_time, player_key, duration=1, sprite_option='A'):
+    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', note='piano/g'):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
-        self.end_time = self.play_time + duration * settings.TEMPO
+        self.end_time = self.play_time + (duration * settings.TEMPO)
         self.duration = duration
         self.player_key = player_key  # 1-8
         self.sprite_option = sprite_option.upper()  # a-d
@@ -25,9 +25,9 @@ class Enemy(pygame.sprite.Sprite):
         w, h = pygame.display.get_surface().get_size()
         channel_size = w / 8
         self.rect = self.image.get_rect()
-        self.rect.center = (channel_size * self.player_key - channel_size / 2, -self.image.get_rect()[0])
+        self.rect.center = (channel_size * self.player_key + channel_size / 2, -self.image.get_rect()[0])
         self.played = False
-        self.note = pygame.mixer.Sound("assets/g.wav")
+        self.note = pygame.mixer.Sound("assets/"+note+".wav")
         self.dead = False
 
     def appear(self):

@@ -93,7 +93,10 @@ class Laser(pygame.sprite.Sprite):
         if self.rect.center[1] < 0:
             self.kill()
 
+
 font_name = pygame.font.match_font('arial')
+
+
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, RED)
@@ -135,6 +138,9 @@ firing_k = False
 firing_l = False
 firing_SC = False
 
+notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'co']
+enemy_sprites = ['A', 'B', 'C', 'D']
+
 enemy_tracks = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
 for key in enemy_tracks:
     enemy_tracks[key] = pygame.sprite.Group()
@@ -152,10 +158,12 @@ while not done:
             print("Loading Level")
             for i in range(56):
                 # This represents an enemy ship
-                enemy = Enemy(i * settings.TEMPO, player_key=(i % 8 + 1))
+                key = round(i * 2.613344) % 8
+                enemy = Enemy(appear_time=i *4* settings.TEMPO, player_key=(key), \
+                              note='piano/' + notes[round(i * 2.613344) % 8], sprite_option=enemy_sprites[i % 4])
 
                 # Add the block to the list of objects
-                list(enemy_tracks.values())[i % 8].add(enemy)
+                list(enemy_tracks.values())[key].add(enemy)
                 enemy_list.add(enemy)
                 all_sprites_list.add(enemy)
             level_start = pygame.time.get_ticks()
@@ -222,7 +230,7 @@ while not done:
                 laser.rect.x = laser.rect.x - 11
                 laser_sprites.add(laser)
                 all_sprites_list.add(laser)
-                #score += 63
+                # score += 63
 
             # Clear the screen
             screen.fill(WHITE)
