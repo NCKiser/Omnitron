@@ -127,6 +127,7 @@ done = False
 clock = pygame.time.Clock()
 
 globals.score = 0
+globals.earned = -1
 
 reloading = False
 KEYS = 8
@@ -256,6 +257,17 @@ while not done:
             # Clear the screen
             screen.fill(WHITE)
             # Draw targetting array
+            if globals.earned is 0:
+                draw_text(screen, 'Miss', 18, settings.SCREEN_WIDTH / 2, 450)
+            if globals.earned > 0 and globals.earned < 51: 
+                draw_text(screen, 'Poor', 18, settings.SCREEN_WIDTH / 2, 450)
+            if globals.earned > 50 and globals.earned < 76: 
+                draw_text(screen, 'Good', 18, settings.SCREEN_WIDTH / 2, 450)
+            if globals.earned > 75 and globals.earned < 100: 
+                draw_text(screen, 'Excellent', 18, settings.SCREEN_WIDTH / 2, 450)
+            if globals.earned is 100: 
+                draw_text(screen, 'Perfect', 18, settings.SCREEN_WIDTH / 2, 450)
+
             w, h = pygame.display.get_surface().get_size()
             line_end_loc = h - (2 * h / 10)
             pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
