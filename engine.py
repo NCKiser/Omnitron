@@ -153,7 +153,7 @@ for key in enemy_tracks:
 level_state = 0
 menu = 0
 level_start = 0
-level_name = "level1.csv"
+level_name = "moonlightSonata.txt.csv"
 level = 1
 player_difficulty = 2
 # -------- Main Program Loop -----------
@@ -168,7 +168,7 @@ while not done:
                 for row in csv.reader(level_file):
                     try:
                         if row[0] != 'appear_time' and row[0] != '#' and row[0] != '//':
-                            appear_time = int(row[0])
+                            appear_time = float(row[0])
                             key = int(row[1]) % KEYS
                             instrument = row[2].strip()
                             note = row[3].strip()
