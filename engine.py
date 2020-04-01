@@ -263,15 +263,13 @@ while not done:
             # Clear the screen
             screen.fill(WHITE)
             # Draw targetting array
-            if globals.earned is 0:
-                draw_text(screen, 'Miss', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.earned > 0 and globals.earned < 51: 
+            if globals.drawP is True:
                 draw_text(screen, 'Poor', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.earned > 50 and globals.earned < 76: 
+            if globals.drawG is True:
                 draw_text(screen, 'Good', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.earned > 75 and globals.earned < 100: 
+            if globals.drawE is True:
                 draw_text(screen, 'Excellent', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.earned is 100: 
+            if globals.drawPe is True:
                 draw_text(screen, 'Perfect', 18, settings.SCREEN_WIDTH / 2, 450)
 
             w, h = pygame.display.get_surface().get_size()
