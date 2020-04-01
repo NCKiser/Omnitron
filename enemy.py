@@ -59,8 +59,10 @@ class Enemy(pygame.sprite.Sprite):
 
     def shot_attempt(self, shot_time):
         pts = 0  # lose points for missing
+        globals.earned = 0
         if self.present and (self.play_time - self.TOLERANCE <= shot_time) and (shot_time <= self.end_time + self.TOLERANCE):
-            globals.score += 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
+            globals.earned = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
+            globals.score += globals.earned
             #print(pts)
             self.appear_time = shot_time
             #print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
