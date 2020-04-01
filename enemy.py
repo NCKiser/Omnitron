@@ -7,7 +7,7 @@ pygame.mixer.init()
 pygame.mixer.set_num_channels(128)
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 200
+    TOLERANCE = 500
     DEFAULT_SPEED = 2
     POINTS = 100
 
