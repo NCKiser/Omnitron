@@ -152,7 +152,7 @@ menu = 0
 level_start = 0
 level_name = "level1.csv"
 level = 1
-
+player_difficulty = 2
 # -------- Main Program Loop -----------
 while not done:
     d_time = clock.tick(60)
@@ -170,15 +170,19 @@ while not done:
                             instrument = row[2].strip()
                             note = row[3].strip()
                             sprite = enemy_sprites[key % len(enemy_sprites)]
-                            difficulty = row[4]
-                            enemy = Enemy(appear_time=appear_time, player_key=key,
-                                          note=os.path.join(instrument, note), sprite_option=sprite)
+                            difficulty = int(row[4])
+                            music_only = False
+                            if difficulty > player_difficulty:
+                                music_only = True
+                            enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
+                                          note=os.path.join(instrument, note), sprite_option=sprite,
+                                          music_only=music_only)
 
                             # Add the block to the list of objects
                             list(enemy_tracks.values())[key].add(enemy)
                             enemy_list.add(enemy)
                             all_sprites_list.add(enemy)
-                    except Exception as e:
+                    except IndexError as e:
                         print(e)
             level_start = pygame.time.get_ticks()
             level_state = 1

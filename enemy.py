@@ -11,7 +11,7 @@ class Enemy(pygame.sprite.Sprite):
     DEFAULT_SPEED = 2
     POINTS = 100
 
-    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', note='piano/g'):
+    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', note='piano/g', music_only=False):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
         self.end_time = self.play_time + (duration * settings.TEMPO)
@@ -29,6 +29,9 @@ class Enemy(pygame.sprite.Sprite):
         self.played = False
         self.note = pygame.mixer.Sound("assets/"+note+".wav")
         self.dead = False
+        self.music_only = music_only
+        if music_only:
+            self.image = pygame.image.load("assets/clear.png")
 
     def appear(self):
         self.present = True
@@ -46,7 +49,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.play()
                 self.played = True
             if y > h:
-                if not self.dead:
+                if not self.dead and not self.music_only:
                     globals.score -= 50
                 self.kill()
 

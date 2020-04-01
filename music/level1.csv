@@ -1,3 +1,4 @@
 appear_time, player_key, instrument, note, difficulty
-01, 0, piano, a, 0
-
+0, 0, piano, a, 0
+16, 1,  piano, b, 3
+32, 2, piano, c, 2
