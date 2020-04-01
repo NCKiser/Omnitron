@@ -28,12 +28,15 @@ https://freesound.org/people/SpeedY/sounds/8403/
 
 5 Effects
 
-#Requirements
+# Requirements
 Python 3.7 or 3.8
 
 Pygame 2.0.0.dev6 (pip install pygame==2.0.0.dev6)
 
-#defining a level
-A level is a cvs file beginning with a row indicating what each column is
+# defining a level
+Each line define when a note will appear
 
-Each column is an enemy, note, or game event, and each row is a point in time
+appear_time, player_key, instrument, note, difficulty
+
+
+Player key is 0 - 7

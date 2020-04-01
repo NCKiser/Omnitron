@@ -1,3 +1,6 @@
+import csv
+import os
+
 import pygame
 import time
 import random
@@ -147,25 +150,36 @@ for key in enemy_tracks:
 level_state = 0
 menu = 0
 level_start = 0
+level_name = "level1.csv"
+level = 1
+
 # -------- Main Program Loop -----------
 while not done:
     d_time = clock.tick(60)
-
     if menu:
-        pass
+        level_name = "level1.csv"
     else:
         if level_state == 0:
             print("Loading Level")
-            for i in range(56):
-                # This represents an enemy ship
-                key = round(i * 2.613344) % 8
-                enemy = Enemy(appear_time=i *4* settings.TEMPO, player_key=(key), \
-                              note='piano/' + notes[round(i * 2.613344) % 8], sprite_option=enemy_sprites[i % 4])
+            with open(os.path.join("music", level_name)) as level_file:
+                for row in csv.reader(level_file):
+                    try:
+                        if row[0] != 'appear_time':
+                            appear_time = int(row[0])
+                            key = int(row[1])
+                            instrument = row[2].strip()
+                            note = row[3].strip()
+                            sprite = enemy_sprites[key % len(enemy_sprites)]
+                            difficulty = row[4]
+                            enemy = Enemy(appear_time=appear_time, player_key=key,
+                                          note=os.path.join(instrument, note), sprite_option=sprite)
 
-                # Add the block to the list of objects
-                list(enemy_tracks.values())[key].add(enemy)
-                enemy_list.add(enemy)
-                all_sprites_list.add(enemy)
+                            # Add the block to the list of objects
+                            list(enemy_tracks.values())[key].add(enemy)
+                            enemy_list.add(enemy)
+                            all_sprites_list.add(enemy)
+                    except Exception as e:
+                        print(e)
             level_start = pygame.time.get_ticks()
             level_state = 1
         elif level_state == 1:
@@ -231,7 +245,10 @@ while not done:
                 laser_sprites.add(laser)
                 all_sprites_list.add(laser)
                 # score += 63
-
+            if len(enemy_list) is 0:
+                level += 1
+                level_state = 0
+                level_name = "level" + str(level) + ".csv"
             # Clear the screen
             screen.fill(WHITE)
             # Draw targetting array
