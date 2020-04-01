@@ -21,7 +21,7 @@ class Enemy(pygame.sprite.Sprite):
         self.present = False
         self.image = None
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("assets/enemy" + self.sprite_option + ".png")
+        self.image = pygame.transform.rotate(pygame.image.load("assets/enemy" + self.sprite_option + ".png"), 180)
         w, h = pygame.display.get_surface().get_size()
         channel_size = w / 8
         self.rect = self.image.get_rect()
