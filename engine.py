@@ -107,6 +107,8 @@ def draw_text(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+def level_cleared(level=0):
+    time.sleep(5)
 
 pygame.init()
 pygame.mixer.init()
@@ -164,9 +166,9 @@ while not done:
             with open(os.path.join("music", level_name)) as level_file:
                 for row in csv.reader(level_file):
                     try:
-                        if row[0] != 'appear_time':
+                        if row[0] != 'appear_time' and row[0] != '#' and row[0] != '//':
                             appear_time = int(row[0])
-                            key = int(row[1])
+                            key = int(row[1]) % KEYS
                             instrument = row[2].strip()
                             note = row[3].strip()
                             sprite = enemy_sprites[key % len(enemy_sprites)]
@@ -184,6 +186,9 @@ while not done:
                             all_sprites_list.add(enemy)
                     except IndexError as e:
                         print(e)
+                    except FileNotFoundError as f:
+                        print(f)
+                        print(os.path.join(instrument, note))
             level_start = pygame.time.get_ticks()
             level_state = 1
         elif level_state == 1:
@@ -250,6 +255,7 @@ while not done:
                 all_sprites_list.add(laser)
                 # score += 63
             if len(enemy_list) is 0:
+                level_cleared(level)
                 level += 1
                 level_state = 0
                 level_name = "level" + str(level) + ".csv"

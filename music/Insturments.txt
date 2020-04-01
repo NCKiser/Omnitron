@@ -1,0 +1,33 @@
+{}|110|
+//Time Note/Filename Duration Instrument;InstrumentDesc
+0 A4 1 0;Electric Piano
+1 A4 1 8;Grand Piano
+2 A4 1 17;Harpsichord
+3 A4 1 25;Ragtime Piano
+4 A4 1 26;Music Box
+5 A#4 1 19;Xylophone
+6 A#4 1 34;Vibraphone
+7 A#4 1 21;Steel Drums
+8 B4 1 1;Acoustic Guitar
+9 B4 1 26;Electric Guitar
+10 B4 1 5;Bass
+11 B4 1 29;Slap Bass
+12 B4 1 32;Jazz Guitar
+13 B4 1 35;Muted E-Guitar
+14 B4 1 38;Distortion Guitar
+15 B4 1 22;Sitar
+16 B4 1 33;Koto
+17 C5 1 3;Smooth Synth
+18 C5 1 6;Synth Pluck
+19 C5 1 7;Scifi
+20 C5 1 13;8-Bit Sine
+21 C5 1 14;8-Bit Square
+22 C5 1 15;8-Bit Sawtooth
+23 C5 1 16;8-Bit Triange
+24 C#5 1 9;French Horn
+25 C#5 1 10;Trombone
+26 C#5 1 11;Violin
+27 C#5 1 12;Cello
+28 C#5 1 18;Concert Harp
+29 C#5 1 20;Pizzicato
+30 C#5 1 23;Flute

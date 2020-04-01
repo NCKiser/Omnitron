@@ -1,0 +1,25 @@
+appear_time, player_key, instrument, note, difficulty
+0,5, piano, e4,0
+2,5, piano, e4,0
+4,3, piano,c4,0
+6,1, piano,a3,0
+10,1, piano,a3,0
+14,4, piano,d4,0
+18,4, piano,d4,0
+22,4, piano,d4,0
+24,6, piano,fs4,0
+26,6, piano,fs4,0
+28,7, piano,g4,0
+30,8, piano,a4,0
+32,7, piano,g4,0
+34,7, piano,g4,0
+36,7, piano,g4,0
+38,4, piano,d4,0
+42,3, piano,c4,0
+46,5, piano,e4,0
+50,5, piano,e4,0
+54,5, piano,e4,0
+56,4, piano,d4,0
+58,4, piano,d4,0
+60,5, piano,e4,0
+62,4, piano,d4,0
