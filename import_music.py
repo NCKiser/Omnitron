@@ -23,7 +23,7 @@ with open(args.input) as input_file:
         try:
             items = command.split(' ')
             time = items[0]
-            note = items[1].lower()
+            note = items[1].lower().replace('#', 's')
             length = items[2]
             instrument = items[3]
             key = notes.index(note[0])
