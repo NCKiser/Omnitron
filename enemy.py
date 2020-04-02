@@ -11,6 +11,7 @@ globals.drawG = False
 globals.drawE = False
 globals.drawPe = False
 
+
 class Enemy(pygame.sprite.Sprite):
     TOLERANCE = 500
     DEFAULT_SPEED = 2
@@ -35,8 +36,6 @@ class Enemy(pygame.sprite.Sprite):
         self.note = pygame.mixer.Sound("assets/"+note+".wav")
         self.dead = False
         self.music_only = music_only
-        if music_only:
-            self.image = pygame.image.load("assets/clear.png")
 
     def appear(self):
         self.present = True
@@ -66,37 +65,38 @@ class Enemy(pygame.sprite.Sprite):
         pts = 0  # lose points for missing
         globals.earned = 0
         globals.drawM = True
-        if self.present and (self.play_time - self.TOLERANCE <= shot_time) and (shot_time <= self.end_time + self.TOLERANCE):
+        if self.present and (self.play_time - self.TOLERANCE <= shot_time) and (
+                shot_time <= self.end_time + self.TOLERANCE):
             globals.earned = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
             globals.score += globals.earned
-            if globals.earned > 0 and globals.earned < 51: 
+            if globals.earned > 0 and globals.earned < 51:
                 globals.drawM = False
                 globals.drawP = True
                 globals.drawG = False
                 globals.drawE = False
                 globals.drawPe = False
-            if globals.earned > 50 and globals.earned < 86: 
+            if globals.earned > 50 and globals.earned < 86:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = True
                 globals.drawE = False
                 globals.drawPe = False
-            if globals.earned > 85 and globals.earned < 100: 
+            if globals.earned > 85 and globals.earned < 100:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = False
                 globals.drawE = True
                 globals.drawPe = False
-            if globals.earned is 100: 
+            if globals.earned is 100:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = False
                 globals.drawE = False
                 globals.drawPe = True
-            #print(pts)
+            # print(pts)
             self.appear_time = shot_time
-            #print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
-            #self.kill()
+            # print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
+            # self.kill()
             self.image = pygame.image.load("assets/clear.png")
             self.dead = True
         return pts
