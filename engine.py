@@ -181,15 +181,10 @@ while not done:
                                 music_only = True
                             try:
                                 enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
-                                          note=os.path.join(instrument, note), sprite_option=sprite,
+                                          note=note, instrument=instrument, sprite_option=sprite,
                                           music_only=music_only)
                             except:
-                                try:
-                                    enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
-                                                  note=os.path.join('piano', note), sprite_option=sprite,
-                                                  music_only=music_only)
-                                except:
-                                    print("Could not create Enemy")
+                                print("Could not create Enemy")
 
                             # Add the block to the list of objects
                             list(enemy_tracks.values())[key].add(enemy)

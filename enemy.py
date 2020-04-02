@@ -1,3 +1,5 @@
+import os
+
 import pygame
 import settings
 
@@ -17,7 +19,7 @@ class Enemy(pygame.sprite.Sprite):
     DEFAULT_SPEED = 2
     POINTS = 100
 
-    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', note='piano/g', music_only=False):
+    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', instrument='piano', note='g4', music_only=False):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
         self.end_time = self.play_time + (duration * settings.TEMPO)
@@ -34,7 +36,13 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.center = (channel_size * self.player_key + channel_size / 2, -self.image.get_rect()[0])
         self.played = False
         print("Note: " + note + ".wav")
-        self.note = pygame.mixer.Sound("assets/" + note + ".wav")
+        try:
+            self.note = pygame.mixer.Sound("assets/" + os.path.join(instrument,note) + ".wav")
+        except FileNotFoundError:
+            try:
+                self.note = pygame.mixer.Sound("assets/piano/"+ note + ".wav")
+            except FileNotFoundError:
+                self.note = pygame.mixer.Sound("assets/piano/g4.wav")
         self.dead = False
         self.music_only = music_only
 
