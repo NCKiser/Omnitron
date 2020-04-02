@@ -20,8 +20,37 @@ lowest_note = None
 highest_note = None
 
 instrument_map = {
-    0: "piano",
-    1: ""
+    0: "electric_piano",
+    8: "grand_piano",
+    17: "harpsicord",
+    25: "rag_piano",
+    26: "music_box",
+    19: "xylophone",
+    34: "vibraphone",
+    21: "steel_drums",
+    1: "acoustic_guitar",
+    27: "electric_guitar",
+    5: "bass",
+    29: "slap_bass",
+    32: "jazz_guitar",
+    35: "muted_electric_guitar",
+    38: "distortion_guitar",
+    22: "sitar",
+    33: "koto",
+    3: "smooth_synth",
+    6: "synth_pluck",
+    7: "sci-fi",
+    13: "sine",
+    14: "square",
+    15: "sawtooth",
+    16: "triangle",
+    9: "french_horn",
+    10: "trombone",
+    11: "violin",
+    12: "cello",
+    18: "concert harp",
+    20: "pizzicato",
+    23: "flute",
 }
 notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b']
 prev_octave = 0
@@ -35,7 +64,10 @@ with open(args.input) as input_file:
             time = items[0]
             note = items[1].lower().replace('#', 's')
             length = items[2]
-            instrument = instrument_map[int(items[3])]
+            try:
+                instrument = instrument_map[int(items[3])]
+            except KeyError as e:
+                instrument = list(instrument_map.values())[0]
             key = notes.index(note[0])
             octave = int(note[-1])
             output = [time, key, instrument, note, 2]
