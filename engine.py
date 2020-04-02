@@ -191,6 +191,7 @@ while not done:
                     except FileNotFoundError as f:
                         print(f)
                         print(os.path.join(instrument, note))
+            d_time = clock.tick(60) /# start once loaded, as leading takes a lot of time
             level_start = pygame.time.get_ticks()
             level_state = 1
         elif level_state == 1:
