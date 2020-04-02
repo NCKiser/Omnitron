@@ -153,7 +153,7 @@ for key in enemy_tracks:
 level_state = 0
 menu = 0
 level_start = 0
-# level_name = "TakeOnMeIntro.txt.csv"
+#level_name = "TakeOnMeIntro.txt.csv"
 level_name = "moonlightSonata.txt.csv"
 level = 1
 player_difficulty = 2
@@ -166,6 +166,7 @@ while not done:
         if level_state == 0:
             print("Loading Level")
             with open(os.path.join("music", level_name)) as level_file:
+                print(os.path.join("music", level_name))
                 for row in csv.reader(level_file):
                     try:
                         if row[0] != 'appear_time' and row[0] != '#' and row[0] != '//':
@@ -178,9 +179,17 @@ while not done:
                             music_only = False
                             if difficulty > player_difficulty:
                                 music_only = True
-                            enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
+                            try:
+                                enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
                                           note=os.path.join(instrument, note), sprite_option=sprite,
                                           music_only=music_only)
+                            except:
+                                try:
+                                    enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
+                                                  note=os.path.join('piano', note), sprite_option=sprite,
+                                                  music_only=music_only)
+                                except:
+                                    print("Could not create Enemy")
 
                             # Add the block to the list of objects
                             list(enemy_tracks.values())[key].add(enemy)

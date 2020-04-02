@@ -33,7 +33,8 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (channel_size * self.player_key + channel_size / 2, -self.image.get_rect()[0])
         self.played = False
-        self.note = pygame.mixer.Sound("assets/"+note+".wav")
+        print("Note: " + note + ".wav")
+        self.note = pygame.mixer.Sound("assets/" + note + ".wav")
         self.dead = False
         self.music_only = music_only
 
