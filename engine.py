@@ -145,7 +145,7 @@ firing_l = False
 firing_SC = False
 
 notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'co']
-enemy_sprites = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A']
+enemy_sprites = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'] # mirrored sprites for easy glancing for key
 
 enemy_tracks = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
 for key in enemy_tracks:
@@ -153,7 +153,7 @@ for key in enemy_tracks:
 level_state = 0
 menu = 0
 level_start = 0
-#level_name = "TakeOnMeIntro.txt.csv"
+# level_name = "TakeOnMeIntro.txt.csv"
 level_name = "moonlightSonata.txt.csv"
 level = 1
 player_difficulty = 2
