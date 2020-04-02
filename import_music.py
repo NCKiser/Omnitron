@@ -8,7 +8,10 @@ args = parser.parse_args()
 
 print(args.input)
 output_file_name = args.input + ".csv"
-os.remove(output_file_name)
+try:
+    os.remove(output_file_name)
+except:
+    print('output file not overwritten, continuing')
 output_file = open(output_file_name, 'w')
 output_csv = csv.writer(output_file)
 

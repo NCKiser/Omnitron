@@ -145,7 +145,7 @@ firing_l = False
 firing_SC = False
 
 notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'co']
-enemy_sprites = ['A', 'B', 'C', 'D']
+enemy_sprites = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'] # mirrored sprites for easy glancing for key
 
 enemy_tracks = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
 for key in enemy_tracks:
@@ -153,6 +153,7 @@ for key in enemy_tracks:
 level_state = 0
 menu = 0
 level_start = 0
+# level_name = "TakeOnMeIntro.txt.csv"
 level_name = "moonlightSonata.txt.csv"
 level = 1
 player_difficulty = 2
@@ -172,7 +173,7 @@ while not done:
                             key = int(row[1]) % KEYS
                             instrument = row[2].strip()
                             note = row[3].strip()
-                            sprite = enemy_sprites[key % len(enemy_sprites)]
+                            sprite = enemy_sprites[key]
                             difficulty = int(row[4])
                             music_only = False
                             if difficulty > player_difficulty:
@@ -190,6 +191,7 @@ while not done:
                     except FileNotFoundError as f:
                         print(f)
                         print(os.path.join(instrument, note))
+            d_time = clock.tick(60) # start once loaded, as leading takes a lot of time
             level_start = pygame.time.get_ticks()
             level_state = 1
         elif level_state == 1:
