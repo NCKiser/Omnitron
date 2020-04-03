@@ -184,8 +184,9 @@ while not done:
                                 enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
                                           note=note, instrument=instrument, sprite_option=sprite,
                                           music_only=music_only)
-                            except:
+                            except Exception as e:
                                 print("Could not create Enemy")
+                                print(e)
 
                             # Add the block to the list of objects
                             list(enemy_tracks.values())[key].add(enemy)

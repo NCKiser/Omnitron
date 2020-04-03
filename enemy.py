@@ -1,3 +1,4 @@
+import io
 import os
 
 import pygame
@@ -14,12 +15,22 @@ globals.drawE = False
 globals.drawPe = False
 
 
+def load_sound(soundname):
+    if soundname not in globals.media:
+        # https://stackoverflow.com/questions/44358334/play-video-and-sound-in-python-with-ram-cache
+        with io.open(soundname, 'rb') as in_file:
+            globals.media[soundname] = io.BytesIO(in_file.read()).getvalue()
+    print("loading {}".format(soundname))
+    return globals.media[soundname]
+
+
 class Enemy(pygame.sprite.Sprite):
     TOLERANCE = 500
     DEFAULT_SPEED = 2
     POINTS = 100
 
-    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', instrument='piano', note='g4', music_only=False):
+    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', instrument='piano', note='g4',
+                 music_only=False):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
         self.end_time = self.play_time + (duration * settings.TEMPO)
@@ -37,12 +48,12 @@ class Enemy(pygame.sprite.Sprite):
         self.played = False
         print("Note: " + note + ".wav")
         try:
-            self.note = pygame.mixer.Sound("assets/" + os.path.join(instrument,note) + ".wav")
+            self.note = pygame.mixer.Sound(load_sound("assets/" + os.path.join(instrument, note) + ".wav"))
         except FileNotFoundError:
             try:
-                self.note = pygame.mixer.Sound("assets/piano/"+ note + ".wav")
+                self.note = pygame.mixer.Sound(load_sound("assets/piano/" + note + ".wav"))
             except FileNotFoundError:
-                self.note = pygame.mixer.Sound("assets/piano/g4.wav")
+                self.note = pygame.mixer.Sound(load_sound("assets/piano/g4.wav"))
         self.dead = False
         self.music_only = music_only
 

@@ -20,7 +20,7 @@ lowest_note = None
 highest_note = None
 
 instrument_map = {
-    0: "electric_piano",
+    0: "piano",
     8: "grand_piano",
     17: "harpsicord",
     25: "rag_piano",
