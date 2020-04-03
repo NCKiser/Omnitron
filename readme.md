@@ -8,25 +8,15 @@ Brendan Noah Freeze
 
 Asset Design by
 
-Noah Kiser
+Noah Kiser and Cassie Paulin
 
-and
-
-Cassie Paulin
-
-
-Music:
-https://freesound.org/people/SpeedY/sounds/8403/
-
-
+# Features
 
 8 Separate tracks for user input
 
-5 drum tracks
+2 drum tracks
 
-3 synthesizers with 40 notes each (chromatic)
-
-5 Effects
+20 synthesizers with ~40+ notes each (chromatic)
 
 # Requirements
 Python 3.7 or 3.8

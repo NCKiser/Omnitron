@@ -7,7 +7,7 @@ import settings
 import globals
 
 pygame.mixer.init()
-pygame.mixer.set_num_channels(128)
+pygame.mixer.set_num_channels(2048)
 globals.drawM = True
 globals.drawP = False
 globals.drawG = False

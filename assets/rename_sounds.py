@@ -7,6 +7,7 @@ parser.add_argument("starting_note")
 args = parser.parse_args()
 
 # https://onlinesequencer.net/1417680
+# https://onlinesequencer.net/1222502#1228715
 
 print(args.instrument, args.starting_note)
 input_location = os.path.join(args.instrument,"output")
