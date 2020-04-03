@@ -18,10 +18,13 @@ globals.drawPe = False
 def load_sound(soundname):
     if soundname not in globals.media:
         # https://stackoverflow.com/questions/44358334/play-video-and-sound-in-python-with-ram-cache
-        with io.open(soundname, 'rb') as in_file:
-            globals.media[soundname] = io.BytesIO(in_file.read()).getvalue()
+        globals.media[soundname] = pygame.mixer.Sound(soundname)
     print("loading {}".format(soundname))
     return globals.media[soundname]
+
+
+def play_sound(soundname):
+    globals.media[soundname].play()
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -48,12 +51,11 @@ class Enemy(pygame.sprite.Sprite):
         self.played = False
         print("Note: " + note + ".wav")
         try:
-            self.note = pygame.mixer.Sound(load_sound("assets/" + os.path.join(instrument, note) + ".wav"))
+            self.sound_name = ("assets/" + os.path.join(instrument, note) + ".wav")
+            load_sound(self.sound_name)
         except FileNotFoundError:
-            try:
-                self.note = pygame.mixer.Sound(load_sound("assets/piano/" + note + ".wav"))
-            except FileNotFoundError:
-                self.note = pygame.mixer.Sound(load_sound("assets/piano/g4.wav"))
+            self.sound_name = ("assets/piano/" + note + ".wav")
+            load_sound(self.sound_name)
         self.dead = False
         self.music_only = music_only
 
@@ -79,7 +81,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def play(self):
         print("PLAYING NOTE")
-        self.note.play()
+        play_sound(self.sound_name)
 
     def shot_attempt(self, shot_time):
         pts = 0  # lose points for missing
