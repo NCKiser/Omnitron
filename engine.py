@@ -17,9 +17,11 @@ settings.SCREEN_HEIGHT = 480
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+GREEN = (131, 214, 62)
 
 pressed = ' '
 
+intro = True
 
 class Ship(pygame.sprite.Sprite):
     """
@@ -66,7 +68,6 @@ class Ship(pygame.sprite.Sprite):
         if pressed == 'SCPressed':
             self.rect.center = w / 1.065, h - h / 10
 
-
 class Laser(pygame.sprite.Sprite):
     """
     This class represents the ball.
@@ -93,16 +94,37 @@ class Laser(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y = self.rect.y - 2
-        if self.rect.center[1] < 0:
+        if self.rect.center[1] < settings.SCREEN_HEIGHT / 1.65:
             self.kill()
+        
 
 
 font_name = pygame.font.match_font('arial')
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, BLACK)
+    return textSurface, textSurface.get_rect()
+
+SHIPSPRITE = pygame.image.load('assets/mainShip.png')
+
+def draw_ship_title(x, y):
+    screen.blit(SHIPSPRITE, (x, y))
+
+ENEMYSPRITE = pygame.image.load('assets/enemyD.png')
+
+def draw_enemy_title(x, y):
+    screen.blit(ENEMYSPRITE, (x, y))
 
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, RED)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
+def draw_text_title(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, GREEN)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
@@ -159,7 +181,27 @@ level_name = "drumTest.txt.csv"
 level = 1
 player_difficulty = 2
 # -------- Main Program Loop -----------
+while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                intro = False
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        screen.fill(WHITE)
+        draw_ship_title(settings.SCREEN_WIDTH / 2 + 13, 350)
+        draw_enemy_title(settings.SCREEN_WIDTH / 2, 160)
+        TEXTTITLE = pygame.font.Font('freesansbold.ttf', 115)
+        TSURF, TRECT = text_objects("Omn tron", TEXTTITLE)
+        draw_text_title(screen, 'I', 100, settings.SCREEN_WIDTH / 2 + 15, 181)
+        draw_text(screen, 'Press any key to continue', 18, settings.SCREEN_WIDTH / 2, 450)
+        TRECT.center = ((settings.SCREEN_WIDTH/2), (settings.SCREEN_HEIGHT/2))
+        screen.blit(TSURF, TRECT)
+        pygame.display.update()
+
 while not done:
+    
     d_time = clock.tick(60)
     if menu:
         level_name = "level1.csv"
@@ -264,10 +306,13 @@ while not done:
                 all_sprites_list.add(laser)
                 # score += 63
             if len(enemy_list) is 0:
+                draw_text(screen, 'Level Cleared!', 18, settings.SCREEN_WIDTH / 2, 200)
+                pygame.display.flip()
                 level_cleared(level)
                 level += 1
                 level_state = 0
                 level_name = "level" + str(level) + ".csv"
+
             # Clear the screen
             screen.fill(WHITE)
             # Draw targetting array

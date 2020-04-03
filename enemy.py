@@ -76,7 +76,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.played = True
             if y > h:
                 if not self.dead and not self.music_only:
-                    globals.score -= 50
+                    globals.score -= 250
                 self.kill()
 
     def play(self):
