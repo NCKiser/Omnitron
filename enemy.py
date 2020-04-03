@@ -109,7 +109,7 @@ class Enemy(pygame.sprite.Sprite):
                 globals.drawG = False
                 globals.drawE = True
                 globals.drawPe = False
-            if globals.earned is 100:
+            if globals.earned == 100:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = False

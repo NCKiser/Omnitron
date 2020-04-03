@@ -305,7 +305,7 @@ while not done:
                 laser_sprites.add(laser)
                 all_sprites_list.add(laser)
                 # score += 63
-            if len(enemy_list) is 0:
+            if len(enemy_list) == 0:
                 draw_text(screen, 'Level Cleared!', 18, settings.SCREEN_WIDTH / 2, 200)
                 pygame.display.flip()
                 level_cleared(level)
