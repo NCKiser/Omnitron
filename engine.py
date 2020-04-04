@@ -180,8 +180,10 @@ level_start = 0
 #level_name = "drumTest.txt.csv"
 #level_name = "Storms.txt.csv"
 #level_name = "DejaVu.txt.csv"
-level_name = "TitleSong.txt.csv"
-level = 1
+#level_name = "TitleSong.txt.csv"
+level_list = ['TitleSong.txt', 'Storms.txt', 'TakeOnMeIntro.txt', 'drumTest.txt', 'moonlightSonata.txt', 'DejaVu.txt']
+tempo_list = [110, 100, 110, 120, 50, 150]
+level = 0
 player_difficulty = 2
 # -------- Main Program Loop -----------
 while intro:
@@ -211,6 +213,9 @@ while not done:
     else:
         if level_state == 0:
             print("Loading Level")
+            level_name = level_list[level] + ".csv"
+            globals.tempo = 1000 * 60 / 4 / tempo_list[level]
+            print("Tempo =",globals.tempo)
             with open(os.path.join("music", level_name)) as level_file:
                 print(os.path.join("music", level_name))
                 for row in csv.reader(level_file):
@@ -226,7 +231,7 @@ while not done:
                             if difficulty > player_difficulty:
                                 music_only = True
                             try:
-                                enemy = Enemy(appear_time=appear_time * settings.TEMPO, player_key=key,
+                                enemy = Enemy(appear_time=appear_time * globals.tempo, player_key=key,
                                           note=note, instrument=instrument, sprite_option=sprite,
                                           music_only=music_only)
                             except Exception as e:
@@ -312,9 +317,8 @@ while not done:
                 draw_text(screen, 'Level Cleared!', 18, settings.SCREEN_WIDTH / 2, 200)
                 pygame.display.flip()
                 level_cleared(level)
-                level += 1
+                level = level + 1
                 level_state = 0
-                level_name = "level" + str(level) + ".csv"
 
             # Clear the screen
             screen.fill(WHITE)

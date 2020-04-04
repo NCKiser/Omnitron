@@ -28,7 +28,7 @@ def play_sound(soundname):
 
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 500
+    TOLERANCE = 300
     DEFAULT_SPEED = 2
     POINTS = 100
 
@@ -36,7 +36,7 @@ class Enemy(pygame.sprite.Sprite):
                  music_only=False):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
-        self.end_time = self.play_time + (duration * settings.TEMPO)
+        self.end_time = self.play_time + (duration * globals.tempo)
         self.duration = duration
         self.player_key = player_key  # 1-8
         self.sprite_option = sprite_option.upper()  # a-d
