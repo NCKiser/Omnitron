@@ -39,20 +39,20 @@ instrument_map = {
     38: "distortion_guitar",#
     22: "sitar",#
     33: "koto",#
-    3: "smooth_synth",
-    6: "synth_pluck",
+    3: "smooth_synth",#
+    6: "synth_pluck",#
     7: "sci-fi",#
-    13: "sine",
+    13: "sine",#
     14: "square",#
     15: "sawtooth",#
-    16: "triangle",
+    16: "triangle",#
     9: "french_horn",#
     10: "trombone",#
     11: "violin",#
-    12: "cello",
+    12: "cello",#
     18: "concert harp",#
-    20: "pizzicato",
-    23: "flute",
+    20: "pizzicato",#
+    23: "flute",#
 }
 notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b']
 prev_octave = 0
