@@ -49,12 +49,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (channel_size * self.player_key + channel_size / 2, -self.image.get_rect()[0])
         self.played = False
-        print("Note: " + note + ".wav")
+        print("Note: " + os.path.join(instrument, note) + ".wav")
         try:
             self.sound_name = ("assets/" + os.path.join(instrument, note) + ".wav")
             load_sound(self.sound_name)
         except FileNotFoundError:
-            self.sound_name = ("assets/piano/" + note + ".wav")
+            self.sound_name = ("assets/electric_piano/" + note + ".wav")
             load_sound(self.sound_name)
         self.dead = False
         self.music_only = music_only
