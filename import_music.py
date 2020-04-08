@@ -33,12 +33,12 @@ instrument_map = {
     31: "electric_drum_kit",#
     4: "electric_guitar",#
     5: "bass",#
-    29: "slap_bass",
-    32: "jazz_guitar",
-    35: "muted_electric_guitar",
+    29: "slap_bass",#
+    32: "jazz_guitar",#
+    35: "muted_electric_guitar",#
     38: "distortion_guitar",#
-    22: "sitar",
-    33: "koto",
+    22: "sitar",#
+    33: "koto",#
     3: "smooth_synth",
     6: "synth_pluck",
     7: "sci-fi",#

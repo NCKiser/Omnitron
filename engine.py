@@ -181,8 +181,8 @@ level_start = 0
 #level_name = "Storms.txt.csv"
 #level_name = "DejaVu.txt.csv"
 #level_name = "TitleSong.txt.csv"
-level_list = ['TitleSong.txt', 'Storms.txt', 'TakeOnMeIntro.txt', 'drumTest.txt', 'moonlightSonata.txt', 'DejaVu.txt']
-tempo_list = [110, 100, 110, 120, 50, 150]
+level_list = ['DejaVu.txt']
+tempo_list = [150]
 level = 0
 player_difficulty = 2
 # -------- Main Program Loop -----------
