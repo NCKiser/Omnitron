@@ -91,19 +91,19 @@ class Enemy(pygame.sprite.Sprite):
                 shot_time <= self.end_time + self.TOLERANCE):
             globals.earned = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)
             globals.score += globals.earned
-            if globals.earned > 0 and globals.earned < 51:
+            if 0 < globals.earned < 51:
                 globals.drawM = False
                 globals.drawP = True
                 globals.drawG = False
                 globals.drawE = False
                 globals.drawPe = False
-            if globals.earned > 50 and globals.earned < 86:
+            if 50 < globals.earned < 86:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = True
                 globals.drawE = False
                 globals.drawPe = False
-            if globals.earned > 85 and globals.earned < 100:
+            if 85 < globals.earned < 100:
                 globals.drawM = False
                 globals.drawP = False
                 globals.drawG = False
