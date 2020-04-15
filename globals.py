@@ -1,4 +1,12 @@
-#globals.py
+# globals.py
+global tempo
+global media
+global earned
+
+global score
+
+global enemy_list
+
 
 def init():
     global score

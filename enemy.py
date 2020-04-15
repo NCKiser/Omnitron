@@ -15,6 +15,14 @@ globals.drawE = False
 globals.drawPe = False
 
 
+def load_image(imagename):
+    if imagename not in globals.media:
+        # https://stackoverflow.com/questions/44358334/play-video-and-sound-in-python-with-ram-cache
+        globals.media[imagename] = pygame.image.load(imagename)
+    print("loading {}".format(imagename))
+    return globals.media[imagename]
+
+
 def load_sound(soundname):
     if soundname not in globals.media:
         # https://stackoverflow.com/questions/44358334/play-video-and-sound-in-python-with-ram-cache
@@ -43,7 +51,7 @@ class Enemy(pygame.sprite.Sprite):
         self.present = False
         self.image = None
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.rotate(pygame.image.load("assets/enemy" + self.sprite_option + ".png"), 180)
+        self.image = pygame.transform.rotate(load_image("assets/enemy" + self.sprite_option + ".png"), 180)
         w, h = pygame.display.get_surface().get_size()
         channel_size = w / 8
         self.rect = self.image.get_rect()
