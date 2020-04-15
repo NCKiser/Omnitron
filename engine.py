@@ -1,15 +1,9 @@
-import csv
-import os
-
 import pygame
 import time
-import random
 import settings
+from LevelInterface import Level
 
-from enemy import Enemy
-import globals
-
-globals.init()
+settings.init()
 
 settings.SCREEN_WIDTH = 640
 settings.SCREEN_HEIGHT = 480
@@ -22,6 +16,7 @@ GREEN = (131, 214, 62)
 pressed = ' '
 
 intro = True
+
 
 class Ship(pygame.sprite.Sprite):
     """
@@ -68,6 +63,7 @@ class Ship(pygame.sprite.Sprite):
         if pressed == 'SCPressed':
             self.rect.center = w / 1.065, h - h / 10
 
+
 class Laser(pygame.sprite.Sprite):
     """
     This class represents the ball.
@@ -96,24 +92,29 @@ class Laser(pygame.sprite.Sprite):
         self.rect.y = self.rect.y - 2
         if self.rect.center[1] < settings.SCREEN_HEIGHT / 1.65:
             self.kill()
-        
 
 
 font_name = pygame.font.match_font('arial')
+
 
 def text_objects(text, font):
     textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
 
+
 SHIPSPRITE = pygame.image.load('assets/mainShip.png')
+
 
 def draw_ship_title(x, y):
     screen.blit(SHIPSPRITE, (x, y))
 
+
 ENEMYSPRITE = pygame.image.load('assets/enemyD.png')
+
 
 def draw_enemy_title(x, y):
     screen.blit(ENEMYSPRITE, (x, y))
+
 
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
@@ -122,6 +123,7 @@ def draw_text(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+
 def draw_text_title(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, GREEN)
@@ -129,8 +131,10 @@ def draw_text_title(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+
 def level_cleared(level=0):
     time.sleep(5)
+
 
 pygame.init()
 pygame.mixer.init()
@@ -150,13 +154,11 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-globals.score = 0
-globals.earned = -1
+settings.score = 0
+settings.earned = -1
 
 reloading = False
-KEYS = 8
-TOLERANCE = 10
-TIME_TO_RELOAD = 1
+
 firing_a = False
 firing_s = False
 firing_d = False
@@ -166,122 +168,84 @@ firing_k = False
 firing_l = False
 firing_SC = False
 
-notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'co']
-enemy_sprites = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'] # mirrored sprites for easy glancing for key
-
-enemy_tracks = {97: 1, 115: 2, 100: 3, 102: 4, 106: 5, 107: 6, 108: 7, 59: 8}
-for key in enemy_tracks:
-    enemy_tracks[key] = pygame.sprite.Group()
 level_state = 0
 menu = 0
 level_start = 0
-#level_name = "TakeOnMeIntro.txt.csv"
-#level_name = "moonlightSonata.txt.csv"
-#level_name = "drumTest.txt.csv"
-#level_name = "Storms.txt.csv"
-#level_name = "DejaVu.txt.csv"
-#level_name = "TitleSong.txt.csv"
+# level_name = "TakeOnMeIntro.txt.csv"
+# level_name = "moonlightSonata.txt.csv"
+# level_name = "drumTest.txt.csv"
+# level_name = "Storms.txt.csv"
+# level_name = "DejaVu.txt.csv"
+# level_name = "TitleSong.txt.csv"
 level_list = ['DejaVu.txt']
 tempo_list = [150]
-level = 0
-player_difficulty = 2
+level_number = 0
+level = None
 # -------- Main Program Loop -----------
 while intro:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                intro = False
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            intro = False
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
 
-        screen.fill(WHITE)
-        draw_ship_title(settings.SCREEN_WIDTH / 2 + 13, 350)
-        draw_enemy_title(settings.SCREEN_WIDTH / 2, 160)
-        TEXTTITLE = pygame.font.Font('freesansbold.ttf', 115)
-        TSURF, TRECT = text_objects("Omn tron", TEXTTITLE)
-        draw_text_title(screen, 'I', 100, settings.SCREEN_WIDTH / 2 + 15, 181)
-        draw_text(screen, 'Press any key to continue', 18, settings.SCREEN_WIDTH / 2, 450)
-        TRECT.center = ((settings.SCREEN_WIDTH/2), (settings.SCREEN_HEIGHT/2))
-        screen.blit(TSURF, TRECT)
-        pygame.display.update()
+    screen.fill(WHITE)
+    draw_ship_title(settings.SCREEN_WIDTH / 2 + 13, 350)
+    draw_enemy_title(settings.SCREEN_WIDTH / 2, 160)
+    TEXTTITLE = pygame.font.Font('freesansbold.ttf', 115)
+    TSURF, TRECT = text_objects("Omn tron", TEXTTITLE)
+    draw_text_title(screen, 'I', 100, settings.SCREEN_WIDTH / 2 + 15, 181)
+    draw_text(screen, 'Press any key to continue', 18, settings.SCREEN_WIDTH / 2, 450)
+    TRECT.center = ((settings.SCREEN_WIDTH / 2), (settings.SCREEN_HEIGHT / 2))
+    screen.blit(TSURF, TRECT)
+    pygame.display.update()
 
 while not done:
-    
+
     d_time = clock.tick(60)
     if menu:
         level_name = "level1.csv"
     else:
         if level_state == 0:
             print("Loading Level")
-            level_name = level_list[level] + ".csv"
-            globals.tempo = 1000 * 60 / 4 / tempo_list[level]
-            print("Tempo =",globals.tempo)
-            with open(os.path.join("music", level_name)) as level_file:
-                print(os.path.join("music", level_name))
-                for row in csv.reader(level_file):
-                    try:
-                        if row[0] != 'appear_time' and row[0] != '#' and row[0] != '//':
-                            appear_time = float(row[0])
-                            key = int(row[1]) % KEYS
-                            instrument = row[2].strip()
-                            note = row[3].strip()
-                            sprite = enemy_sprites[key]
-                            difficulty = int(row[4])
-                            music_only = False
-                            if difficulty > player_difficulty:
-                                music_only = True
-                            try:
-                                enemy = Enemy(appear_time=appear_time * globals.tempo, player_key=key,
-                                          note=note, instrument=instrument, sprite_option=sprite,
-                                          music_only=music_only)
-                            except Exception as e:
-                                print("Could not create Enemy")
-                                print(e)
-
-                            # Add the block to the list of objects
-                            list(enemy_tracks.values())[key].add(enemy)
-                            enemy_list.add(enemy)
-                            all_sprites_list.add(enemy)
-                    except IndexError as e:
-                        print(e)
-                    except FileNotFoundError as f:
-                        print(f)
-                        print(os.path.join(instrument, note))
-            d_time = clock.tick(60) # start once loaded, as leading takes a lot of time
+            level_name = level_list[level_number] + ".csv"
+            settings.tempo = 1000 * 60 / 4 / tempo_list[level_number]
+            print("Tempo =", settings.tempo)
+            level = Level(level_name)
+            d_time = clock.tick(60)  # start once loaded, as leading takes a lot of time
             level_start = pygame.time.get_ticks()
             level_state = 1
         elif level_state == 1:
             current_time = pygame.time.get_ticks() - level_start
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    level.shoot(event.key, time)
                     try:
-                        for enemy in enemy_tracks[event.key]:
-                            enemy.shot_attempt(current_time)
-                            print(current_time)
-                            if event.key == pygame.K_a:
-                                pressed = 'APressed'
-                                firing_a = True
-                            if event.key == pygame.K_s:
-                                pressed = 'SPressed'
-                                firing_s = True
-                            if event.key == pygame.K_d:
-                                pressed = 'DPressed'
-                                firing_d = True
-                            if event.key == pygame.K_f:
-                                pressed = 'FPressed'
-                                firing_f = True
-                            if event.key == pygame.K_j:
-                                pressed = 'JPressed'
-                                firing_j = True
-                            if event.key == pygame.K_k:
-                                pressed = 'KPressed'
-                                firing_k = True
-                            if event.key == pygame.K_l:
-                                pressed = 'LPressed'
-                                firing_l = True
-                            if event.key == pygame.K_SEMICOLON:
-                                pressed = 'SCPressed'
-                                firing_SC = True
+                        if event.key == pygame.K_a:
+                            pressed = 'APressed'
+                            firing_a = True
+                        if event.key == pygame.K_s:
+                            pressed = 'SPressed'
+                            firing_s = True
+                        if event.key == pygame.K_d:
+                            pressed = 'DPressed'
+                            firing_d = True
+                        if event.key == pygame.K_f:
+                            pressed = 'FPressed'
+                            firing_f = True
+                        if event.key == pygame.K_j:
+                            pressed = 'JPressed'
+                            firing_j = True
+                        if event.key == pygame.K_k:
+                            pressed = 'KPressed'
+                            firing_k = True
+                        if event.key == pygame.K_l:
+                            pressed = 'LPressed'
+                            firing_l = True
+                        if event.key == pygame.K_SEMICOLON:
+                            pressed = 'SCPressed'
+                            firing_SC = True
                     except KeyError:
                         print("invalid key")
                 if event.type == pygame.KEYUP:
@@ -313,41 +277,40 @@ while not done:
                 laser_sprites.add(laser)
                 all_sprites_list.add(laser)
                 # score += 63
-            if len(enemy_list) == 0:
+            if level.done():
                 draw_text(screen, 'Level Cleared!', 18, settings.SCREEN_WIDTH / 2, 200)
                 pygame.display.flip()
-                level_cleared(level)
-                level = level + 1
+                level_cleared(level_number)
+                level_number = level_number + 1
                 level_state = 0
 
             # Clear the screen
             screen.fill(WHITE)
             # Draw targetting array
-            if globals.drawP is True:
+            if settings.drawP is True:
                 draw_text(screen, 'Poor', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.drawG is True:
+            if settings.drawG is True:
                 draw_text(screen, 'Good', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.drawE is True:
+            if settings.drawE is True:
                 draw_text(screen, 'Excellent', 18, settings.SCREEN_WIDTH / 2, 450)
-            if globals.drawPe is True:
+            if settings.drawPe is True:
                 draw_text(screen, 'Perfect', 18, settings.SCREEN_WIDTH / 2, 450)
 
             w, h = pygame.display.get_surface().get_size()
             line_end_loc = h - (2 * h / 10)
             pygame.draw.line(screen, RED, (0, line_end_loc,), (w, line_end_loc))
-            for i in range(0, KEYS):
-                pygame.draw.circle(screen, RED, (w / KEYS * (i + .5), line_end_loc),
-                                   radius=h / settings.SCREEN_HEIGHT * TOLERANCE)
-                pygame.draw.circle(screen, WHITE, (w / KEYS * (i + .5), line_end_loc),
-                                   radius=h / settings.SCREEN_HEIGHT * TOLERANCE - 1)
-            for enemy in enemy_list:
-                if enemy.appear_time <= current_time:
-                    enemy.appear()
-            enemy_list.update(d_time)
+            for i in range(0, settings.KEYS):
+                pygame.draw.circle(screen, RED, (w / settings.KEYS * (i + .5), line_end_loc),
+                                   radius=h / settings.SCREEN_HEIGHT * settings.TOLERANCE)
+                pygame.draw.circle(screen, WHITE, (w / settings.KEYS * (i + .5), line_end_loc),
+                                   radius=h / settings.SCREEN_HEIGHT * settings.TOLERANCE - 1)
+
             player.update()
             laser_sprites.update()
+            level.update(current_time, d_time)
+            level.draw(screen)
             all_sprites_list.draw(screen)
-            draw_text(screen, str(round(globals.score)), 18, settings.SCREEN_WIDTH / 2, 10)
+            draw_text(screen, str(round(settings.score)), 18, settings.SCREEN_WIDTH / 2, 10)
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
