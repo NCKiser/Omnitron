@@ -83,7 +83,7 @@ class Level:
             print("non-mapped key pressed")
         for enemy in self.current_enemies:
             print(key, enemy.player_key)
-            if enemy.player_key == key and not enemy.dead:
+            if enemy.player_key == key and not enemy.dead and (enemy.play_time - enemy.TOLERANCE <= time <= enemy.end_time + enemy.TOLERANCE):
                 enemy.shot_attempt(time)
                 break
 

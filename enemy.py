@@ -36,7 +36,7 @@ def play_sound(soundname):
 
 class EnemyPrototype:
 
-    def __init__(self, appear_time, player_key, duration=1, sprite_option='A', instrument='piano', note='g4',
+    def __init__(self, appear_time, player_key, duration=0, sprite_option='A', instrument='piano', note='g4',
                  music_only=False):
         self.appear_time = appear_time
         self.play_time = self.appear_time + settings.VISIBLE_TIME
@@ -56,7 +56,7 @@ class EnemyPrototype:
 
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 300
+    TOLERANCE = 200
     DEFAULT_SPEED = 2
     POINTS = 100
 
@@ -137,7 +137,6 @@ class Enemy(pygame.sprite.Sprite):
                 settings.drawE = False
                 settings.drawPe = True
             # print(pts)
-            self.appear_time = shot_time
             # print(self.play_time - self.TOLERANCE, shot_time, self.end_time + self.TOLERANCE)
             # self.kill()
             self.image = pygame.image.load("assets/clear.png")
