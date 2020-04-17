@@ -174,7 +174,7 @@ level_start = 0
 
 level_list = ['TitleSong.txt','drumTest.txt','level2.txt','level3.txt']
 tempo_list = [110,110,110,110]
-level_number = 0
+level_number = 1
 level = None
 # -------- Main Program Loop -----------
 while intro:
