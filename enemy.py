@@ -56,7 +56,7 @@ class EnemyPrototype:
 
 
 class Enemy(pygame.sprite.Sprite):
-    TOLERANCE = 200
+    TOLERANCE = 100
     DEFAULT_SPEED = 2
     POINTS = 100
 
