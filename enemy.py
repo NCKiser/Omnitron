@@ -70,7 +70,10 @@ class Enemy(pygame.sprite.Sprite):
         self.present = True
         self.image = None
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.rotate(load_image("assets/enemy" + self.sprite_option + ".png"), 180)
+        if ep.music_only:
+            self.image = pygame.image.load("assets/clear.png")
+        else:
+            self.image = pygame.transform.rotate(load_image("assets/enemy" + self.sprite_option + ".png"), 180)
         w, h = pygame.display.get_surface().get_size()
         channel_size = w / 8
         self.rect = self.image.get_rect()
@@ -95,7 +98,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.played = True
             if y > h:
                 if not self.dead and not self.music_only:
-                    settings.score -= 250
+                    settings.score -= 100
                 self.kill()
 
     def play(self):
