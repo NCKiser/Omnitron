@@ -177,8 +177,8 @@ level_start = 0
 # level_name = "Storms.txt.csv"
 # level_name = "DejaVu.txt.csv"
 # level_name = "TitleSong.txt.csv"
-level_list = ['DejaVu.txt']
-tempo_list = [150]
+level_list = ['level2.txt']
+tempo_list = [110]
 level_number = 0
 level = None
 # -------- Main Program Loop -----------
