@@ -1,3 +1,4 @@
+import copy
 import csv
 import os
 
@@ -18,19 +19,23 @@ class EnemyQueue:
             notes_to_play = self.times.get(ep.appear_time)
         except KeyError as e:
             print(e)
-        if notes_to_play:
-            self.times[ep.appear_time] = notes_to_play.append(ep)
-        else:
-            self.times[ep.appear_time] = [ep]
+        if notes_to_play is None:
+            self.times[ep.appear_time] = list()
+        self.times[ep.appear_time].append(ep)
 
     def dequeue(self):
         """ returns the earliest list of enemies and the time at which they are to appear"""
-        min_time = min(list(self.times.keys()))
-        print(min_time)
+        min_time = self.time()
         return self.times.pop(min_time)
 
     def time(self):
-        return min(list(self.times.keys()))
+        try:
+            return min(list(self.times.keys()))
+        except ValueError:
+            return None
+
+    def __str__(self):
+        return str(self.times)
 
 
 class Level:
@@ -64,10 +69,12 @@ class Level:
                             print("Could not create Enemy")
                             print(e)
                 except IndexError as e:
-                    print(e)
+                    pass
                 except FileNotFoundError as f:
                     print(f)
                     print(os.path.join(instrument, note))
+        print("Level:")
+        print(str(self.enemy_queue))
 
     def shoot(self, key, time):
         try:
@@ -81,7 +88,7 @@ class Level:
                 break
 
     def update(self, time):
-        while time > self.enemy_queue.time():
+        while self.enemy_queue.time() is not None and time > self.enemy_queue.time():
             print(time, self.enemy_queue.time())
             enemies = self.enemy_queue.dequeue()
             if enemies:

@@ -45,7 +45,7 @@ class EnemyPrototype:
         self.player_key = player_key  # 1-8
         self.sprite_option = sprite_option.upper()  # a-d
         load_image("assets/enemy" + self.sprite_option + ".png")
-        print("Note: " + os.path.join(instrument, note) + ".wav")
+        # print("Note: " + os.path.join(instrument, note) + ".wav")
         try:
             self.sound_name = ("assets/" + os.path.join(instrument, note) + ".wav")
             load_sound(self.sound_name)
