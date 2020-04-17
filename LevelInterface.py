@@ -70,7 +70,10 @@ class Level:
                     print(os.path.join(instrument, note))
 
     def shoot(self, key, time):
-        key = settings.key_map[key]
+        try:
+            key = settings.key_map[key]
+        except KeyError:
+            print("non-mapped key pressed")
         for enemy in self.current_enemies:
             print(key, enemy.player_key)
             if enemy.player_key == key and not enemy.dead:
