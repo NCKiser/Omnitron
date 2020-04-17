@@ -73,7 +73,7 @@ class Level:
         key = settings.key_map[key]
         for enemy in self.current_enemies:
             print(key, enemy.player_key)
-            if enemy.player_key == key:
+            if enemy.player_key == key and not enemy.dead:
                 enemy.shot_attempt(time)
                 break
 
