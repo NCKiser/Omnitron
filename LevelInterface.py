@@ -70,7 +70,9 @@ class Level:
                     print(os.path.join(instrument, note))
 
     def shoot(self, key, time):
+        key = settings.key_map[key]
         for enemy in self.current_enemies:
+            print(key, enemy.player_key)
             if enemy.player_key == key:
                 enemy.shot_attempt(time)
                 break

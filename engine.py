@@ -220,7 +220,7 @@ while not done:
             current_time = pygame.time.get_ticks() - level_start
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    level.shoot(event.key, time)
+                    level.shoot(event.key, current_time)
                     try:
                         if event.key == pygame.K_a:
                             pressed = 'APressed'

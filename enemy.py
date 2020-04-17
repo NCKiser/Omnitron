@@ -105,6 +105,8 @@ class Enemy(pygame.sprite.Sprite):
         pts = 0  # lose points for missing
         settings.earned = 0
         settings.drawM = True
+        print(shot_time)
+        print(type(shot_time))
         if self.present and (self.play_time - self.TOLERANCE <= shot_time) and (
                 shot_time <= self.end_time + self.TOLERANCE):
             settings.earned = 100 * (1 - abs(self.play_time - shot_time) / self.TOLERANCE)

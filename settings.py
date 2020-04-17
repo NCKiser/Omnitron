@@ -12,6 +12,7 @@ TIME_TO_RELOAD = 1
 
 ENEMY_SPRITES = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'] # mirrored sprites for easy glancing for key
 NOTES = ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'co']
+key_map = {97: 0, 115: 1, 100: 2, 102: 3, 106: 4, 107: 5, 108: 6, 59: 7}
 
 PLAYER_DIFFICULTY = 2
 
