@@ -171,15 +171,10 @@ firing_SC = False
 level_state = 0
 menu = 0
 level_start = 0
-# level_name = "TakeOnMeIntro.txt.csv"
-# level_name = "moonlightSonata.txt.csv"
-# level_name = "drumTest.txt.csv"
-# level_name = "Storms.txt.csv"
-# level_name = "DejaVu.txt.csv"
-# level_name = "TitleSong.txt.csv"
-level_list = ['level3.txt']
-tempo_list = [110]
-level_number = 0
+
+level_list = ['TitleSong.txt','drumTest.txt','level2.txt','level3.txt']
+tempo_list = [110,110,110,110]
+level_number = 2
 level = None
 # -------- Main Program Loop -----------
 while intro:
@@ -205,7 +200,7 @@ while not done:
 
     d_time = clock.tick(60)
     if menu:
-        level_name = "level1.csv"
+        level_name = "TitleSong.txt.csv"
     else:
         if level_state == 0:
             print("Loading Level")
