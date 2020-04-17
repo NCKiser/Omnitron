@@ -307,7 +307,7 @@ while not done:
 
             player.update()
             laser_sprites.update()
-            level.update(current_time, d_time)
+            level.update(current_time)
             level.draw(screen)
             all_sprites_list.draw(screen)
             draw_text(screen, str(round(settings.score)), 18, settings.SCREEN_WIDTH / 2, 10)

@@ -77,14 +77,14 @@ class Level:
                 enemy.shot_attempt(time)
                 break
 
-    def update(self, time, d_time):
+    def update(self, time):
         while time > self.enemy_queue.time():
             print(time, self.enemy_queue.time())
             enemies = self.enemy_queue.dequeue()
             if enemies:
                 for enemy in enemies:
                     self.current_enemies.add(Enemy(enemy))
-        self.current_enemies.update(d_time)
+        self.current_enemies.update(time)
 
     def draw(self, surface):
         self.current_enemies.draw(surface)

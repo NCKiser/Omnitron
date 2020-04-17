@@ -80,13 +80,14 @@ class Enemy(pygame.sprite.Sprite):
         self.dead = False
         self.music_only = ep.music_only
 
-    def update(self, d_time):
+    def update(self, current_time):
         if self.present:
             w, h = pygame.display.get_surface().get_size()
             line_end_loc = h - (2 * h / 10)
-            distance = line_end_loc * d_time / settings.VISIBLE_TIME
+            dy = line_end_loc / settings.VISIBLE_TIME
+            pos = dy * (current_time-self.appear_time)
             # speed = h / 600 * self.DEFAULT_SPEED
-            self.rect = self.rect.move(0, distance)
+            self.rect.center = (self.rect.center[0], pos)
             x, y = self.rect.center
 
             if y >= line_end_loc and not self.played:
